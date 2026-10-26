@@ -1,0 +1,10 @@
+[global]
+showWarningOnDirectExecution = false
+
+[server]
+headless = true
+runOnSave = false
+
+[client]
+showSidebarNavigation = false
+toolbarMode = "auto"

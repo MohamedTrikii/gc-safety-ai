@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Large model files (optional — commentez si vous voulez les versionner)
+# models/*.joblib
+
+# Données sensibles (optionnel)
+# *.csv
+
+# Archives & local leftovers
+*.rar
+*.zip
+ISET/
+.venv-*/
