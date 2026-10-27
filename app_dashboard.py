@@ -1265,6 +1265,12 @@ def main():
                 st.error("Models not loaded. Check the models/ folder.")
                 return
 
+            if not rapport.strip():
+                st.warning(
+                    "📝 No inspection report: the model relies heavily on the report text "
+                    "(urgency, missing PPE, compliance). Add the report for a reliable prediction."
+                )
+
             with st.spinner("🤖 AI analysis in progress…"):
                 try:
                     x_vec = build_feature_vector(

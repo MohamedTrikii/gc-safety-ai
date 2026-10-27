@@ -67,12 +67,14 @@ Pour réentraîner, exécutez les notebooks dans l'ordre : `preprocessing_chanti
 ├── models/                          # modèles entraînés (joblib)
 ├── Dataset.csv                      # 1 000 inspections (données structurées + texte du rapport)
 ├── docs/                            # cahier des charges, figures, captures, présentation
-└── scripts/generate_presentation.py # génère la présentation (python-pptx)
+└── scripts/                         # generate_presentation.py (présentation) · retrain_balanced.py (étude de rééquilibrage)
 ```
 
 ## ⚠️ Limites et suite
 
-- Le jeu de données est **déséquilibré** (841 inspections sur 1 000 classées *Critique*) : le modèle penche vers *Critique* même pour des conditions modérées. Suite : pondération des classes / rééchantillonnage et calibration des seuils.
+- Les étiquettes sont **très déséquilibrées** (877 *Critique*, 103 *Élevé*, 20 *Moyen*). Résultats par classe du MLP déployé sur le jeu de test : rappel de **0,99** sur *Critique*, mais seulement 0,24 sur *Élevé* et 0,25 sur *Moyen*.
+- **Étude de rééquilibrage** ([`scripts/retrain_balanced.py`](scripts/retrain_balanced.py)) : sur-échantillonnage, régression logistique et forêt aléatoire pondérées, ajustement du seuil, comparés sur le même découpage. Une régression logistique pondérée obtient un meilleur macro-F1 (0,67 contre 0,55) et repère la plupart des cas *Élevé*, mais rate 14 % des chantiers *Critique*. Rater un chantier critique étant l'erreur la plus coûteuse, le modèle à fort rappel est conservé.
+- Le modèle s'appuie beaucoup sur le texte du rapport : le tableau de bord avertit quand le rapport est vide.
 - 1 000 inspections seulement : résultats à confirmer sur des données réelles de chantier.
 
 ## 👤 Auteur

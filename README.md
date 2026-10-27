@@ -67,12 +67,14 @@ To retrain, run the notebooks in order: `preprocessing_chantier.ipynb` → `chan
 ├── models/                          # trained models (joblib)
 ├── Dataset.csv                      # 1,000 inspections (structured data + report text)
 ├── docs/                            # specification, figures, screenshots, slides
-└── scripts/generate_presentation.py # builds the slide deck (python-pptx)
+└── scripts/                         # generate_presentation.py (slides) · retrain_balanced.py (class-balancing study)
 ```
 
 ## ⚠️ Limitations & next steps
 
-- The dataset is **imbalanced** (841 / 1,000 inspections labelled *Critique*): the model leans towards *Critique* even for mild conditions. Next step: class weighting / resampling and threshold calibration.
+- The labels are **heavily imbalanced** (877 *Critique*, 103 *Élevé*, 20 *Moyen*). Per-class results of the deployed MLP on the test split: recall **0.99** on *Critique*, but only 0.24 on *Élevé* and 0.25 on *Moyen*.
+- **Balancing study** ([`scripts/retrain_balanced.py`](scripts/retrain_balanced.py)): oversampling, class-weighted logistic regression / random forest and threshold tuning were compared on the same split. A weighted logistic regression reaches a better macro-F1 (0.67 vs 0.55) and catches most *Élevé* cases, but misses 14 % of *Critique* sites. Since missing a critical site is the costliest error, the high-recall model is kept.
+- The model relies heavily on the report text: the dashboard warns when the report is empty.
 - 1,000 inspections only — results should be confirmed on real site data.
 
 ## 👤 Author
